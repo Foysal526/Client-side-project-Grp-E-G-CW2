@@ -37,6 +37,26 @@ $(document).ready(function () {
     }
   });
 
+// Form data persistence
+$(document).ready(function () {
+  // Load saved data from localStorage on page load
+  if (localStorage.getItem("contactFormData")) {
+    const savedData = JSON.parse(localStorage.getItem("contactFormData"));
+    $("#name").val(savedData.name || "");
+    $("#email").val(savedData.email || "");
+    $("#message").val(savedData.message || "");
+  }
+
+  // Save data to localStorage on input change
+  $("#name, #email, #message").on("input", function () {
+    const contactFormData = {
+      name: $("#name").val().trim(),
+      email: $("#email").val().trim(),
+      message: $("#message").val().trim(),
+    };
+    localStorage.setItem("contactFormData", JSON.stringify(contactFormData));
+  });
+
   // Form validation
   $("#contactForm").on("submit", function (e) {
     e.preventDefault();
@@ -77,3 +97,6 @@ $(document).ready(function () {
     $(this)[0].reset(); // reset the form
   });
 });
+});
+
+
